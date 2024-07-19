@@ -18,7 +18,7 @@ function App() {
     
     if(todoName==="")
     {
-      NotificationManager.error('kch likh isme!',"Tmkc Lawde");
+      NotificationManager.error('Error!',"Please Enter Some Task!");
       
     }
     if(!todolist.includes(todoName)&&(todoName!==""))
