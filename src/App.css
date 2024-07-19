@@ -17,6 +17,12 @@
   b
 } */
 
+
+.theme-toggle{
+  background-color: black;
+  color: white;
+
+}
 .light
 {
   background-color: white;

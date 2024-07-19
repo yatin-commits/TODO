@@ -1,133 +1,130 @@
 import 'react-notifications/lib/notifications.css';
 import { useState } from 'react';
 import './App.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import Toggle from './toggle';
-
-let clas;
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 function App() {
+  const [theme, setTheme] = useState('dark');
 
+  const darkThemeStyles = {
+    backgroundColor: 'black',
+    color: 'white',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  };
 
-  const [theme,setTheme]=useState("dark");
+  const lightThemeStyles = {
+    backgroundColor: 'white',
+    color: 'black',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  };
 
-  
+  const darkButtonStyles = {
+    backgroundColor: 'white',
+    color: 'black',
+    border:"2px solid black"
+  };
 
-  
- 
-  const [todolist,setTodoList]=useState([]);
-  // let[]
-  
+  const lightButtonStyles = {
+    backgroundColor: 'black',
+    color: 'white',
+    border:"2px solid white"
+  };
 
-  const saveTodoList=(event)=>
-  {
-    
-    let todoName =event.target.todoName.value;
-    
-    
-    if(todoName==="")
-    {
-      NotificationManager.error('Please Enter Some Task!',"Error!");
-      
-    }
-    if(!todolist.includes(todoName)&&(todoName!==""))
-    {
-      let finalTodoList=[...todolist,todoName];
-      setTodoList(finalTodoList);
-      event.target.todoName.value="";
-    }
-    
-    if(todolist.includes(todoName)){
-      alert("Todo Name Already Exists!!")
-    }
-    
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const [todolist, setTodoList] = useState([]);
+
+  const saveTodoList = (event) => {
     event.preventDefault();
+    let todoName = event.target.todoName.value;
 
-  }
-
-  let list=todolist.map((v,index)=>{
-    return(<TodoListComponent value={v} key={index} indexNumber={index} 
-      todolist={todolist} 
-      setTodoList={setTodoList}/>)
-  })
-  let appStyles;
-  const toggleTheme=()=>
-    {
-      
-      
-      if(theme==="dark")
-      {
-        setTheme("light");
-         clas="light";
-         
-         appStyles = {
-          backgroundColor: 'black',
-          minHeight: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column'
-      };
-      console.log(appStyles);
-      }
-      else{
-        setTheme("dark");
-         clas="dark";
-  
-      }
+    if (todoName === '') {
+      NotificationManager.error('Please Enter Some Task!', "Error!");
+      return;
     }
-  
-  
-  
+
+    if (!todolist.includes(todoName)) {
+      setTodoList([...todolist, todoName]);
+      event.target.todoName.value = '';
+    } else {
+      alert("Todo Name Already Exists!!");
+    }
+  };
+
+  let list = todolist.map((v, index) => {
+    return (
+      <TodoListComponent 
+        value={v} 
+        key={index} 
+        indexNumber={index} 
+        todolist={todolist} 
+        setTodoList={setTodoList}
+      />
+    );
+  });
+
+  const currentThemeStyles = theme === 'dark' ? lightThemeStyles : darkThemeStyles;
+  const currentButtonStyles = theme === 'dark' ? darkButtonStyles : lightButtonStyles;
 
   return (
-    
-    <div >
-      
-      <NotificationContainer/>
-      <div style={appStyles} className='sub-container'>
-   <h1 className='heading'>Todo List<sup><button  onClick={toggleTheme} className={clas} >{theme}</button></sup></h1></div>
+    <div style={currentThemeStyles}>
+      <NotificationContainer />
+      <div className='sub-container'>
+        <h1 className='heading'>
+          Todo List.
+          <sup>
+            <button 
+              onClick={toggleTheme} 
+              style={currentButtonStyles} 
+              className="theme-toggle"
+            >
+              {theme === 'light' ? 'Dark' : 'light'}
+            </button>
+          </sup>
+        </h1>
+      </div>
       <div className='container'>
-   <form onSubmit={saveTodoList}>
-    <input type='text' name='todoName' placeholder='Enter Task'></input><button>Save</button>
-
-   </form>
-   </div>
-
-   <div className='outerDiv'>
-
-    <ul>
-      {list}
-    
-    </ul>
-   </div>
-   </div>
- 
+        <form onSubmit={saveTodoList}>
+          <input type='text' name='todoName' placeholder='Enter Task' />
+          <button type='submit'>Save</button>
+        </form>
+      </div>
+      <div className='outerDiv'>
+        <ul>
+          {list}
+        </ul>
+      </div>
+    </div>
   );
 }
 
+function TodoListComponent({ value, indexNumber, todolist, setTodoList }) {
+  const [strikeThrough, setStrike] = useState(false);
 
+  const strike = () => {
+    setStrike(!strikeThrough);
+  };
 
+  const deleteRow = () => {
+    let finalData = todolist.filter((v, i) => i !== indexNumber);
+    setTodoList(finalData);
+  };
 
-function TodoListComponent({value,indexNumber,todolist,setTodoList})
-{
-  const [strikeThrough,setStrike]=useState(false);
-  function strike()
-{
-  setStrike(!strikeThrough)
-
-}
-  const deleteRow=()=>{
-    let finalData=todolist.filter((v,i)=>i!==indexNumber)
-    
-    setTodoList(finalData)
-    
-  
-  }
   return (
-    <li className={strikeThrough?"completeTodo":" "} onClick={strike}>{indexNumber+1} . {value}  <span onClick={deleteRow}>&times;</span></li>
-
-  )
+    <li className={strikeThrough ? 'completeTodo' : ''} onClick={strike}>
+      {indexNumber + 1}. {value} <span onClick={deleteRow}>&times;</span>
+    </li>
+  );
 }
 
 export default App;
