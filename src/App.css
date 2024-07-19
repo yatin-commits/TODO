@@ -4,6 +4,44 @@
   justify-content: center;
 }
 
+.toggle-btn
+{
+  background-color: black;
+  color: white;
+  padding: 2px;
+  font-family: poppins;
+  cursor: pointer;
+}
+/* .dark
+{
+  b
+} */
+
+.light
+{
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  font-family: poppins;
+}
+.dark
+{
+  background-color: black;
+  color: white;
+  font-family: poppins;
+}
+
+
+
+
+.sub-container
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .heading
 {
