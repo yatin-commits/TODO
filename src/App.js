@@ -9,21 +9,13 @@ function App() {
   const darkThemeStyles = {
     backgroundColor: 'black',
     color: 'white',
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    
   };
 
   const lightThemeStyles = {
     backgroundColor: 'white',
     color: 'black',
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    
   };
 
   const darkButtonStyles = {
@@ -74,7 +66,7 @@ function App() {
   });
 
   const currentThemeStyles = theme === 'dark' ? lightThemeStyles : darkThemeStyles;
-  const currentButtonStyles = theme === 'dark' ? darkButtonStyles : lightButtonStyles;
+  const currentButtonStyles = theme === 'dark' ? darkThemeStyles : lightButtonStyles;
 
   return (
     <div style={currentThemeStyles}>
