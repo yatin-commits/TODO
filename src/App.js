@@ -66,7 +66,7 @@ function App() {
   });
 
   const currentThemeStyles = theme === 'dark' ? lightThemeStyles : darkThemeStyles;
-  const currentButtonStyles = theme === 'dark' ? darkThemeStyles : lightButtonStyles;
+  const currentButtonStyles = theme === 'dark' ? darkButtonStyles : lightButtonStyles;
 
   return (
     <div style={currentThemeStyles}>
